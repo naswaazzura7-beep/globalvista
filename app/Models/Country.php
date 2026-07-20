@@ -9,6 +9,7 @@ class Country extends Model
     protected $fillable = [
 
         'name',
+        'iso3',
         'capital',
         'region',
         'currency',
@@ -20,7 +21,12 @@ class Country extends Model
 
         'flag',
 
-        'risk_score'
+        'risk_score',
+
+        // Economy
+        'gdp',
+        'gdp_year',
+        'gdp_growth'
 
     ];
 }

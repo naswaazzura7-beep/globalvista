@@ -12,12 +12,45 @@ class WeatherController extends Controller
     {
         $search = $request->search;
 
-        $countries = Country::when($search, function ($query) use ($search) {
-            $query->where('name', 'like', "%{$search}%");
-        })
-        ->orderBy('name')
-        ->paginate(15);
+        $country = null;
+        $weather = null;
 
-        return view('weather', compact('countries', 'search'));
+        if ($search) {
+
+            $country = Country::where('name', 'like', "%{$search}%")->first();
+
+            if ($country && $country->latitude && $country->longitude) {
+
+                try {
+
+                    $response = Http::timeout(10)->get(
+                        'https://api.open-meteo.com/v1/forecast',
+                        [
+                            'latitude' => $country->latitude,
+                            'longitude' => $country->longitude,
+                            'current' => 'temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code'
+                        ]
+                    );
+
+                    if ($response->successful()) {
+                        $weather = $response->json()['current'];
+                    }
+
+                } catch (\Exception $e) {
+
+                    // API gagal, jangan sampai halaman error
+                    $weather = null;
+
+                }
+
+            }
+
+        }
+
+        return view('weather', compact(
+            'search',
+            'country',
+            'weather'
+        ));
     }
 }

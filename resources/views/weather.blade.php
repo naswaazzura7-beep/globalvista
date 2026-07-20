@@ -2,145 +2,141 @@
 
 <div class="p-8">
 
-<div class="max-w-7xl mx-auto">
+    <div class="max-w-4xl mx-auto">
 
-<div class="flex justify-between items-center mb-8">
+        <div class="bg-white rounded-3xl shadow-xl p-8">
 
-<div>
+            <h1 class="text-4xl font-bold text-cyan-700 mb-2">
+                🌦 Weather Information
+            </h1>
 
-<h1 class="text-4xl font-bold text-indigo-700">
-🌦 Weather Information
-</h1>
+            <p class="text-gray-500 mb-8">
+                Real-time weather using Open-Meteo API
+            </p>
 
-<p class="text-gray-500 mt-2">
-Weather overview by country
-</p>
+            <form method="GET" class="flex gap-4 mb-8">
 
-</div>
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ $search }}"
+                    placeholder="Search country (Example: Indonesia)"
+                    class="flex-1 border rounded-xl px-5 py-3 focus:ring-2 focus:ring-cyan-500">
 
-<form method="GET">
+                <button
+                    class="bg-cyan-600 hover:bg-cyan-700 text-white px-8 rounded-xl font-semibold">
 
-<input
-type="text"
-name="search"
-value="{{ $search }}"
-placeholder="🔍 Search Country..."
-class="w-80 rounded-xl border border-gray-300 px-5 py-3 shadow-sm">
+                    Search
 
-</form>
+                </button>
 
-</div>
+            </form>
 
-<div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+            @if($country && $weather)
 
-<table class="w-full">
+            <div class="grid md:grid-cols-2 gap-6">
 
-<thead class="bg-gradient-to-r from-cyan-600 to-blue-600 text-white">
+                <div class="bg-cyan-50 rounded-2xl p-6">
 
-<tr>
+                    <div class="flex items-center gap-4 mb-5">
 
-<th class="py-4">No</th>
-<th>Flag</th>
-<th class="text-left">Country</th>
-<th>Capital</th>
-<th>Region</th>
-<th>Temperature</th>
-<th>Status</th>
+                        <img src="{{ $country->flag }}"
+                             class="w-20 rounded shadow">
 
-</tr>
+                        <div>
 
-</thead>
+                            <h2 class="text-3xl font-bold">
+                                {{ $country->name }}
+                            </h2>
 
-<tbody>
+                            <p class="text-gray-600">
+                                {{ $country->capital }}
+                            </p>
 
-@forelse($countries as $index=>$country)
+                        </div>
 
-<tr class="border-b hover:bg-cyan-50">
+                    </div>
 
-<td class="text-center py-4">
-{{ $countries->firstItem()+$index }}
-</td>
+                    <div class="space-y-3">
 
-<td class="text-center">
-<img src="{{ $country->flag }}" class="w-12 h-8 rounded shadow mx-auto">
-</td>
+                        <p>
+                            🌍 <b>Region :</b> {{ $country->region }}
+                        </p>
 
-<td class="font-semibold">
-{{ $country->name }}
-</td>
+                        <p>
+                            👥 <b>Population :</b>
+                            {{ number_format($country->population) }}
+                        </p>
 
-<td>
-{{ $country->capital }}
-</td>
+                    </div>
 
-<td>
-{{ $country->region }}
-</td>
+                </div>
 
-<td class="text-center">
-{{ rand(18,35) }} °C
-</td>
+                <div class="bg-indigo-50 rounded-2xl p-6">
 
-<td class="text-center">
+                    <h3 class="text-2xl font-bold mb-5">
+                        Live Weather
+                    </h3>
 
-@if(rand(1,3)==1)
+                    <div class="space-y-4">
 
-<span class="bg-green-100 text-green-700 px-3 py-1 rounded-full">
-Sunny ☀️
-</span>
+                        <p class="text-xl">
+                            🌡 Temperature :
+                            <b>{{ $weather['temperature_2m'] }} °C</b>
+                        </p>
 
-@elseif(rand(1,2)==1)
+                        <p class="text-xl">
+                            💧 Humidity :
+                            <b>{{ $weather['relative_humidity_2m'] }} %</b>
+                        </p>
 
-<span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full">
-Rain 🌧
-</span>
+                        <p class="text-xl">
+                            💨 Wind Speed :
+                            <b>{{ $weather['wind_speed_10m'] }} km/h</b>
+                        </p>
 
-@else
+                        <p class="text-xl">
+                            ☁ Weather Code :
+                            <b>{{ $weather['weather_code'] }}</b>
+                        </p>
 
-<span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full">
-Cloudy ☁️
-</span>
+                    </div>
 
-@endif
+                </div>
 
-</td>
+            </div>
 
-</tr>
+            @elseif($search)
 
-@empty
+                <div class="bg-red-100 text-red-700 p-5 rounded-xl">
 
-<tr>
+                    Country not found or weather unavailable.
 
-<td colspan="7" class="text-center py-8">
+                </div>
 
-No Data
+            @else
 
-</td>
+                <div class="text-center py-16">
 
-</tr>
+                    <div class="text-7xl mb-5">
+                        🌎
+                    </div>
 
-@endforelse
+                    <h2 class="text-2xl font-bold mb-3">
+                        Search Any Country
+                    </h2>
 
-</tbody>
+                    <p class="text-gray-500">
+                        Example: Indonesia, Japan, Malaysia, Singapore, Australia
+                    </p>
 
-</table>
+                </div>
 
-</div>
+            @endif
 
-<div class="mt-6 flex justify-between">
+        </div>
 
-<p>
-
-Total Countries :
-<strong>{{ $countries->total() }}</strong>
-
-</p>
-
-{{ $countries->withQueryString()->links() }}
-
-</div>
-
-</div>
+    </div>
 
 </div>
 

@@ -32,7 +32,6 @@
 
             </div>
 
-
             <!-- Table -->
             <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
 
@@ -45,10 +44,11 @@
                             <th class="py-4 px-4">No</th>
                             <th class="py-4 px-4">Flag</th>
                             <th class="py-4 px-4 text-left">Country</th>
+                            <th class="py-4 px-4">ISO3</th>
                             <th class="py-4 px-4 text-left">Capital</th>
                             <th class="py-4 px-4">Region</th>
                             <th class="py-4 px-4">Currency</th>
-                            <th class="py-4 px-4">Population</th>
+                            <th class="py-4 px-4 text-right">Population</th>
                             <th class="py-4 px-4">Risk</th>
 
                         </tr>
@@ -62,21 +62,30 @@
                         <tr class="border-b hover:bg-indigo-50 transition">
 
                             <td class="text-center py-4">
+                                {{ $countries->firstItem() + $index }}
+                            </td>
 
-                                {{ $countries->firstItem()+$index }}
+                            <td class="text-center">
+
+                                <img
+                                    src="{{ $country->flag }}"
+                                    class="w-12 h-8 rounded shadow mx-auto">
+
+                            </td>
+
+                            <td class="font-semibold text-gray-800">
+
+                                {{ $country->name }}
 
                             </td>
 
                             <td class="text-center">
 
-                                <img src="{{ $country->flag }}"
-                                    class="w-12 h-8 rounded shadow mx-auto">
+                                <span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-bold">
 
-                            </td>
+                                    {{ $country->iso3 }}
 
-                            <td class="font-semibold">
-
-                                {{ $country->name }}
+                                </span>
 
                             </td>
 
@@ -98,7 +107,7 @@
 
                             </td>
 
-                            <td class="text-right pr-6">
+                            <td class="text-right pr-6 font-semibold text-blue-700">
 
                                 {{ number_format($country->population) }}
 
@@ -106,13 +115,13 @@
 
                             <td class="text-center">
 
-                                @if($country->risk_score>=70)
+                                @if($country->risk_score >= 70)
 
                                     <span class="bg-red-100 text-red-600 px-3 py-1 rounded-full font-semibold text-sm">
                                         High
                                     </span>
 
-                                @elseif($country->risk_score>=40)
+                                @elseif($country->risk_score >= 40)
 
                                     <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full font-semibold text-sm">
                                         Medium
@@ -134,7 +143,7 @@
 
                         <tr>
 
-                            <td colspan="8" class="py-10 text-center text-gray-500">
+                            <td colspan="9" class="py-10 text-center text-gray-500">
 
                                 Country not found.
 
@@ -154,8 +163,13 @@
 
                 <span class="text-gray-500">
 
-                    Showing {{ $countries->firstItem() }} - {{ $countries->lastItem() }}
-                    of {{ $countries->total() }} countries
+                    Showing
+                    {{ $countries->firstItem() }}
+                    -
+                    {{ $countries->lastItem() }}
+                    of
+                    {{ $countries->total() }}
+                    countries
 
                 </span>
 

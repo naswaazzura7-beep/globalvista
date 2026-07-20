@@ -1,5 +1,6 @@
 <aside class="w-72 bg-gradient-to-b from-blue-950 via-slate-900 to-slate-950 text-white flex flex-col shadow-2xl">
 
+
     <!-- Logo -->
     <div class="px-8 py-8 border-b border-slate-700">
 
@@ -13,19 +14,82 @@
 
     </div>
 
+
+
     <!-- Menu -->
     <nav class="flex-1 px-6 py-8 space-y-3">
+
 
         <p class="text-slate-500 text-xs uppercase tracking-widest mb-3">
             Main Menu
         </p>
 
+
+
+        <!-- ADMIN PANEL -->
+
+        <p class="text-cyan-400 text-xs uppercase tracking-widest mt-5 mb-3">
+            Admin Panel
+        </p>
+
+
+        <a href="{{ route('admin.dashboard') }}"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800 transition">
+
+            👑 Admin Dashboard
+
+        </a>
+
+
+
+        <a href="{{ route('countries.admin') }}"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800 transition">
+
+            🌍 Manage Countries
+
+        </a>
+
+
+
+        <a href="{{ route('ports.index') }}"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800 transition">
+
+            🚢 Manage Ports
+
+        </a>
+
+
+
+        <a href="{{ route('users.index') }}"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800 transition">
+
+            👤 Manage Users
+
+        </a>
+
+
+
+        <div class="border-t border-slate-700 my-5"></div>
+
+
+
+        <!-- USER MENU -->
+
+
+        <p class="text-slate-500 text-xs uppercase tracking-widest mb-3">
+            Global Data
+        </p>
+
+
+
         <a href="{{ route('dashboard') }}"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl bg-cyan-500 text-white font-semibold shadow hover:bg-cyan-400 transition">
+            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800 transition">
 
             🏠 Dashboard
 
         </a>
+
+
 
         <a href="{{ route('countries.index') }}"
             class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800 transition">
@@ -34,12 +98,16 @@
 
         </a>
 
+
+
         <a href="#"
             class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800 transition">
 
             🚢 Ports
 
         </a>
+
+
 
         <a href="{{ route('currency') }}"
             class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800 transition">
@@ -48,12 +116,16 @@
 
         </a>
 
+
+
         <a href="{{ route('weather') }}"
             class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800 transition">
 
             🌦 Weather
 
         </a>
+
+
 
         <a href="{{ route('news') }}"
             class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800 transition">
@@ -62,6 +134,8 @@
 
         </a>
 
+
+
         <a href="{{ route('analytics') }}"
             class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800 transition">
 
@@ -69,35 +143,58 @@
 
         </a>
 
+
     </nav>
 
+
+
+
     <!-- User -->
+
     <div class="border-t border-slate-700 p-6">
 
+
         <div class="bg-slate-800 rounded-xl p-4">
+
 
             <p class="text-slate-400 text-sm">
                 Logged in as
             </p>
 
+
+
             <h3 class="font-bold mt-1">
                 {{ Auth::user()->name }}
             </h3>
 
+
+
+            <p class="text-xs text-cyan-400 mt-1">
+                Role : {{ Auth::user()->role }}
+            </p>
+
+
+
             <form method="POST" action="{{ route('logout') }}" class="mt-4">
+
                 @csrf
+
 
                 <button
                     class="w-full bg-red-500 hover:bg-red-600 rounded-lg py-2 font-semibold">
 
-                    Logout
+                    🚪 Logout
 
                 </button>
 
+
             </form>
+
 
         </div>
 
+
     </div>
+
 
 </aside>
